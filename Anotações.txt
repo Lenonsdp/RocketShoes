@@ -1,0 +1,4 @@
+yarn global add json-server
+fake api
+
+para rodar = json-server server.json -p 3333
