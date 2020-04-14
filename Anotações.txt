@@ -2,3 +2,6 @@ yarn global add json-server
 fake api
 
 para rodar = json-server server.json -p 3333
+
+yarn add redux react-redux
+lib redux e integração com react
