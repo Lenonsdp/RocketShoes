@@ -1,3 +1,77 @@
+yarn create react-app 'Name'
+
+yarn add eslint -D
+
+generate editor.config
+root = true
+
+[*]
+end_of_Line = lf
+indent_style = space
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+yarn add prettier eslint-config-prettier eslint-plugin-prettier babel-eslint -D
+
+.eslintrc.js
+module.exports = {
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "prettier",
+        "prettier/react"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "react/jsx-filename-extension": [
+            "warn",
+            { extension: [".jsx", ".js"]}
+        ],
+        "import/prefer-default-export": off
+    }
+};
+
+.prettierrc
+{
+    "singleQuote": true,
+    "trailingComma": "es5"
+
+}
+
+
+yarn add react-router-dom
+
+yarn add styled-components
+vscode-styled-components """ extensão """
+
+yarn add react-icons
+
+yarn add axios
+
+yarn add prop-types
+
 yarn global add json-server
 fake api
 
@@ -5,3 +79,7 @@ para rodar = json-server server.json -p 3333
 
 yarn add redux react-redux
 lib redux e integração com react
+
+
+yarn add reactotron-react-js reactotron-redux
+Ajuda a debugar a aplicação
