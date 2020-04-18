@@ -83,3 +83,7 @@ lib redux e integração com react
 
 yarn add reactotron-react-js reactotron-redux
 Ajuda a debugar a aplicação
+
+yarn add immer
+Consigo controlar o estado imutavel nos meus reducer aplicando 
+algumas regras, criando um rascunho draft para alteração.

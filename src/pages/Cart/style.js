@@ -31,11 +31,11 @@ export const Container = styled.div`
 
 export const ProductTable = styled.table`
   width: 100%;
-  thead th {
-      color: #999;
-      text-align: left;
-      padding: 12px;
-  }
+    thead th {
+        color: #999;
+        text-align: left;
+        padding: 12px;
+    }
 
   tbody td {
       padding: 12px;
@@ -71,7 +71,7 @@ export const ProductTable = styled.table`
     }
   }
   button {
-      background: none;
+      background: none !important;
       border: 0;
       padding: 6px;
 
