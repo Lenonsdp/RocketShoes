@@ -87,3 +87,12 @@ Ajuda a debugar a aplicação
 yarn add immer
 Consigo controlar o estado imutavel nos meus reducer aplicando 
 algumas regras, criando um rascunho draft para alteração.
+
+
+Redux Saga middlewares que executa uma action no reducer, quando utilizar, 
+por exemplo obter mais informações de um objteto ao entrar no mesmo.
+yarn add redux-saga
+
+
+yarn add reactotron-redux-saga
+Plugin para o reactotron
