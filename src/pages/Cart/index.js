@@ -5,8 +5,16 @@ import { Container, ProductTable, Total } from './style';
 import { connect } from 'react-redux';
 import * as CartActions from  '../../store/modules/cart/actions';
 import cart from '../../store/modules/cart/reducer';
+import { formatPrice } from '../../util/format';
 
-function Cart({ cart, removeFromCart }) {
+function Cart({ cart, total, removeFromCart, updateAmount }) {
+	function increment(product) {
+		updateAmount(product.id, product.amount + 1);
+	}
+
+	function decrement(product) {
+		updateAmount(product.id, product.amount - 1);
+	}
   return (
     <Container>
       <ProductTable>
@@ -31,15 +39,17 @@ function Cart({ cart, removeFromCart }) {
 					</td>
 					<td>
 						<div>
-							<button type='button'>
+							<button type='button' onClick={() => decrement(product)}>
 								<MdRemoveCircleOutline size={20} color='#7159c1'/>
+							</button>
 								<input type='number' readOnly value={product.amount} />
+							<button type='button' onClick={() => increment(product)}>
 								<MdAddCircleOutline size={20} color='#7159c1'/>
 							</button>
 						</div>
 					</td>
 					<td>
-						<strong>R$ 258,80</strong>
+						<strong>{product.subTotal}</strong>
 					</td>
 					<td>
 					<button type='button' onClick={() => removeFromCart(product.id)}>
@@ -56,7 +66,7 @@ function Cart({ cart, removeFromCart }) {
 
         <Total>
           <span>Total</span>
-          <strong>R$ 1950,00</strong>
+			<strong>{total}</strong>
         </Total>
       </footer>
     </Container>
@@ -64,7 +74,14 @@ function Cart({ cart, removeFromCart }) {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(product => ({
+	  ...product,
+	  subTotal: formatPrice(product.price * product.amount)
+  })),
+
+  total: formatPrice(state.cart.reduce((total, product) => {
+	  return total + product.price * product.amount;
+  }, 0))
 });
 
 const mapDispatchToProps = dispatch =>
