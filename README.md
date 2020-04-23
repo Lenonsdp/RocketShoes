@@ -1,4 +1,4 @@
-Projeto para estudo da arquitetura flux
+Projeto para estudo da arquitetura flux no react.
 
 ### `yarn start`
 
