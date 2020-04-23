@@ -100,3 +100,7 @@ Plugin para o reactotron
 
 yarn add react-toastify
 Ele é um alerta do react um toast.
+
+yarn add history
+Serve para controlar as history do navegador criando o arquivo history.js
+importo no app troco browserHIstory por Router e adiciono a opção <history={history}>...
