@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MdShoppingCart } from 'react-icons/md';
 import { ProductList } from './style';
 import { formatPrice } from '../../util/format';
@@ -8,62 +7,52 @@ import api from '../../services/api';
 
 import * as CartActions from  '../../store/modules/cart/actions';
 
-class Home extends Component {
-  state = {
-    products: []
-  };
-
-  async componentDidMount() {
-    const response = await api.get('products');
-
-    const data = response.data.map(product =>({
-      ...product,
-      priceFormatted: formatPrice(product.price)
-    }));
-    this.setState({ products: data });
-  }
-
-  handleAddProduct = id => {
-    // dispatch serve para disparar alguma ação do redux esta no props;
-    const { addToCartRequest } = this.props;
-
-    addToCartRequest(id);
-  };
-
-  render() {
-    const { products } = this.state;
-    const { amount } = this.props;
-    return (
-      <ProductList>
-        { products.map(product => (
-          <li key={product.id}>
-            <img src={product.image} alt={product.title}/>
-            <strong>{product.title}</strong>
-            <span>{product.priceFormatted}</span>
-
-            <button type='button' onClick={() => this.handleAddProduct(product.id)} >
-              <div> 
-              <MdShoppingCart size='16' color='#fff' />{amount[product.id] || 0}
-              </div>
-
-              <span>Adicionar ao carrinho</span>
-            </button>
-          </li>
-        )) }
-      </ProductList> 
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  amount: state.cart.reduce((amount, product) => {
+export default function Home() {
+  const [ products, setProducts] = useState([]);
+  const amount = useSelector(state => state.cart.reduce((amount, product) => {
     amount[product.id] = product.amount;
     return amount;
-  }, {})
-});
+  }, {}));
 
-// Converte actions em propriedades do componente
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
+  const dispatch = useDispatch();
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get('products');
+    
+      const data = response.data.map(product =>({
+        ...product,
+        priceFormatted: formatPrice(product.price)
+      }));
+
+      setProducts(data);      
+    }
+    
+    loadProducts();
+  }, []);
+
+  function handleAddProduct(id) {
+    dispatch(CartActions.addToCartRequest(id));
+  };
+
+
+  return (
+    <ProductList>
+      { products.map(product => (
+        <li key={product.id}>
+          <img src={product.image} alt={product.title}/>
+          <strong>{product.title}</strong>
+          <span>{product.priceFormatted}</span>
+
+          <button type='button' onClick={() => handleAddProduct(product.id)} >
+            <div> 
+            <MdShoppingCart size='16' color='#fff' />{amount[product.id] || 0}
+            </div>
+
+            <span>Adicionar ao carrinho</span>
+          </button>
+        </li>
+      )) }
+    </ProductList> 
+  );
+}
